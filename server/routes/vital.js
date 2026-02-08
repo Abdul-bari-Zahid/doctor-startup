@@ -1,12 +1,13 @@
 import express from "express";
 import Vitals from "../models/Vitals.js";
 import dotenv from "dotenv";
+import auth from "../middleware/authmiddleware.js"; // ✅ Add auth middleware
 import { analyzeReportText } from "../utils/gemini.js"; // reuse
 dotenv.config();
 
 const router = express.Router();
 
-router.post("/add", async (req, res) => {
+router.post("/add", auth, async (req, res) => {
   try {
     const { bp, sugar, weight, notes } = req.body;
 
@@ -52,7 +53,14 @@ Vitals:
       }
     }
 
-    const newVitals = await Vitals.create({ bp, sugar, weight, notes, aiResult });
+    const newVitals = await Vitals.create({ 
+      userId: req.user.id, // ✅ Save current user's ID
+      bp, 
+      sugar, 
+      weight, 
+      notes, 
+      aiResult 
+    });
 
     res.json({
       message: "Vitals saved and AI result generated ✅",
@@ -64,10 +72,10 @@ Vitals:
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const allVitals = await Vitals.find().sort({ createdAt: -1 });
-    res.json(allVitals);
+    const userVitals = await Vitals.find({ userId: req.user.id }).sort({ createdAt: -1 }); // ✅ Filter by user ID
+    res.json(userVitals);
   } catch (err) {
     res.status(500).json({ error: "Server error ❌" });
   }

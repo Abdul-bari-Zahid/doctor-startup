@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HeartPulse, Dumbbell, PencilLine } from "lucide-react";
-import axios from "axios";
+import { API } from "../api";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ function AddVitals() {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/vitals/add", form);
+      const res = await API.post("/vitals/add", form);
       setAiResult(res.data.vitals.aiResult);
       toast.success("✅ Vitals saved & AI result generated");
     } catch (err) {

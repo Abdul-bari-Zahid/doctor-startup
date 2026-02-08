@@ -39,7 +39,11 @@ cloudinary.v2.config({
 export const uploadToCloudinary = (fileBuffer, folder = "medical-reports") => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.v2.uploader.upload_stream(
-      { folder, resource_type: "auto" },
+      { 
+        folder, 
+        resource_type: "auto",
+        type: "upload" // ✅ Ensure public accessibility
+      },
       (error, result) => {
         if (error) reject(error);
         else resolve(result);
