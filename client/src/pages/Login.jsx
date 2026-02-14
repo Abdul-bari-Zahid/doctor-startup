@@ -36,7 +36,7 @@ const handleSubmit = async (e) => {
 };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
       <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg border border-gray-200">
         <h2 className="text-4xl font-bold text-center text-blue-600">MediAI</h2>
         <p className="text-center mt-1 text-gray-600">Sign in to your account</p>

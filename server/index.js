@@ -53,8 +53,8 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://doctor-startup.vercel.app",
-    "https://doctor-startup-ljnz.vercel.app",
+    "https://ai-doc-client.vercel.app",
+    "https://ai-doc-ser.vercel.app",
     /https:\/\/ai-doc-client--.*--vercel\.app/,
     /https:\/\/ai-doc-ser--.*--vercel\.app/
   ],

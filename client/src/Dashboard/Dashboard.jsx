@@ -248,7 +248,7 @@ const Dashboard = () => {
       <div className="grid lg:grid-cols-3 gap-8 mb-10">
         {/* Main Graph Section */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+          <div className="bg-white p-8 rounded-4xl shadow-sm border border-slate-100">
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h3 className="text-xl font-bold text-slate-800">Health Trends</h3>
@@ -291,7 +291,7 @@ const Dashboard = () => {
           </div>
 
           {/* Recent Reports Table */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+          <div className="bg-white p-8 rounded-4xl shadow-sm border border-slate-100">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-slate-800">Recent Reports</h3>
               <Link to="/viewReport" className="text-blue-600 text-sm font-bold flex items-center gap-1 hover:underline">
@@ -388,7 +388,7 @@ const Dashboard = () => {
           {/* AI Advice Card */}
           <motion.div
             whileHover={{ y: -5 }}
-            className="bg-indigo-600 p-8 rounded-[2rem] text-white shadow-xl shadow-indigo-100 relative overflow-hidden"
+            className="bg-indigo-600 p-8 rounded-4xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden"
           >
             <div className="relative z-10">
               <div className="flex items-center gap-2 mb-6">
@@ -412,7 +412,7 @@ const Dashboard = () => {
           </motion.div>
 
           {/* Location Based Medicine Advice Info */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+          <div className="bg-white p-8 rounded-4xl shadow-sm border border-slate-100">
             <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
               <Info size={20} className="text-blue-500" /> Regional Care
             </h3>
@@ -422,7 +422,7 @@ const Dashboard = () => {
           </div>
 
           {/* Quick Stats / Recent Vitals */}
-          <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
+          <div className="bg-white p-8 rounded-4xl shadow-sm border border-slate-100">
             <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
               <Thermometer size={20} className="text-rose-500" /> Recent Vitals
             </h3>
@@ -453,14 +453,14 @@ const Dashboard = () => {
       </div>
 
       {/* Floating Chat Widget */}
-      <div className="fixed bottom-8 right-8 z-[100]">
+      <div className="fixed bottom-8 right-8 z-100">
         <AnimatePresence>
           {isChatOpen && (
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="absolute bottom-20 right-0 w-[350px] md:w-[400px] h-[500px] bg-white rounded-[2rem] shadow-2xl border border-slate-200 flex flex-col overflow-hidden"
+              className="absolute bottom-20 right-0 w-[350px] md:w-[400px] h-[500px] bg-white rounded-4xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden"
             >
               <div className="bg-blue-600 p-6 text-white flex items-center justify-between">
                 <div className="flex items-center gap-3">
