@@ -7,6 +7,8 @@ const vitalsSchema = new mongoose.Schema({
   weight: Number,
   notes: String,
   aiResult: String,
+  structuredData: mongoose.Schema.Types.Mixed,
+  language: { type: String, default: "English" },
   createdAt: { type: Date, default: Date.now }
 });
 

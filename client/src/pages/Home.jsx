@@ -9,17 +9,17 @@ import CTA from '../components/CTA';
 import Security from '../components/Security';
 
 function Home() {
-return (
-<div >
-    {/* <Navbar /> */}
+  return (
+    <div >
+      <Navbar />
       <Hero />
       <Features />
       <HowItWorks />
       <Testimonials />
       <CTA />
-<Security />
-      
-</div>
-);
+      <Security />
+      {/* <Footer /> */}
+    </div>
+  );
 }
 export default Home;

@@ -1,8 +1,9 @@
 import express from "express";
 import Vitals from "../models/Vitals.js";
+import User from "../models/User.js";
 import dotenv from "dotenv";
 import auth from "../middleware/authmiddleware.js"; // ✅ Add auth middleware
-import { analyzeReportText } from "../utils/gemini.js"; // reuse
+import { analyzeVitals } from "../utils/gemini.js";
 dotenv.config();
 
 const router = express.Router();
@@ -10,56 +11,42 @@ const router = express.Router();
 router.post("/add", auth, async (req, res) => {
   try {
     const { bp, sugar, weight, notes } = req.body;
+    const userId = req.user.id || req.user._id;
 
-    console.log("📦 Body received:", req.body);
+    console.log("📦 Vitals received:", { userId, bp, sugar, weight });
 
-    // ✅ Prompt with explicit formatting instructions
-    const promptText = `
-You are a professional health assistant. Summarize the user's health report in clear, structured English.
-Use the following format exactly, and do NOT use Markdown headings or emojis:
+    // Fetch user for global settings
+    let user = await User.findById(userId);
+    if (!user && req.user.email) {
+      user = await User.findOne({ email: req.user.email });
+    }
 
-Patient Summary:
-<short paragraph describing the patient's condition>
+    const language = user?.language || "English";
+    const country = user?.country || "Pakistan";
 
-Key Findings:
-- ...
-
-Possible Health Risks:
-- ...
-
-Suggested Actions:
-- ...
-
-Severity: Low / Medium / High
-Disclaimer: AI generated. Consult a doctor.
-
-Vitals:
-- Blood Pressure: ${bp}
-- Sugar Level: ${sugar} mg/dL
-- Weight: ${weight} kg
-- Notes: ${notes}
-`;
-
-    let aiResult = "AI result not available";
+    let aiResult = { summary: "AI analysis not available." };
 
     if (!process.env.GEMINI_API_KEY) {
       console.warn("⚠️ GEMINI_API_KEY not found");
     } else {
       try {
-        aiResult = await analyzeReportText(promptText);
+        const vitalsData = { bp, sugar, weight, notes };
+        aiResult = await analyzeVitals(vitalsData, language, country);
       } catch (e) {
         console.error("AI ERROR:", e.message);
-        aiResult = "AI processing error.";
+        aiResult = { summary: "AI processing error.", error: e.message };
       }
     }
 
-    const newVitals = await Vitals.create({ 
-      userId: req.user.id, // ✅ Save current user's ID
-      bp, 
-      sugar, 
-      weight, 
-      notes, 
-      aiResult 
+    const newVitals = await Vitals.create({
+      userId: userId,
+      bp,
+      sugar,
+      weight,
+      notes,
+      aiResult: aiResult.summary,
+      structuredData: aiResult,
+      language
     });
 
     res.json({
